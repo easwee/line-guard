@@ -1,6 +1,8 @@
 import * as vscode from "vscode";
 import * as path from "path";
 
+const INIT_VALIDATION_DELAY = 250;
+
 const decorationType = vscode.window.createTextEditorDecorationType({
   isWholeLine: true,
   rangeBehavior: vscode.DecorationRangeBehavior.ClosedClosed,
@@ -132,19 +134,23 @@ function validateAllOpenDocuments() {
 export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(
     vscode.workspace.onDidChangeTextDocument(({ document }) => {
-      const editor = vscode.window.activeTextEditor;
-      if (editor) {
-        validateDocument(editor, document);
-      }
+      setTimeout(() => {
+        const editor = vscode.window.activeTextEditor;
+        if (editor) {
+          validateDocument(editor, document);
+        }
+      }, INIT_VALIDATION_DELAY);
     })
   );
 
   context.subscriptions.push(
     vscode.window.onDidChangeActiveTextEditor(
       (editor: vscode.TextEditor | undefined) => {
-        if (editor) {
-          validateDocument(editor, editor.document);
-        }
+        setTimeout(() => {
+          if (editor) {
+            validateDocument(editor, editor.document);
+          }
+        }, INIT_VALIDATION_DELAY);
       }
     )
   );

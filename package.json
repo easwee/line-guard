@@ -2,7 +2,9 @@
   "name": "line-guard",
   "displayName": "Line Guard",
   "description": "File linting line by line by matching the line against custom regex rule.",
-  "version": "0.0.1",
+  "version": "1.0.1",
+  "publisher": "easwee",
+  "repository": "https://github.com/easwee/line-guard",
   "engines": {
     "vscode": "^1.75.0"
   },
@@ -41,8 +43,18 @@
       "properties": {
         "lineGuard.regex": {
           "type": "string",
-          "default": "/^(?!x)x$/",
-          "description": "The regular expression used to validate lines."
+          "default": "",
+          "description": "Regex string that will be passed to new RegExp (without encapsulating slashes)."
+        },
+        "lineGuard.fileExtensions": {
+          "type": "string",
+          "default": "*",
+          "description": "Comma delimited extensions list of files that are meant to be validated. Use '*' to include all"
+        },
+        "lineGuard.fileNames": {
+          "type": "string",
+          "default": "*",
+          "description": "Comma delimited file names list of files that are mean to be validated. Use '*' to include all"
         }
       }
     }
